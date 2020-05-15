@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 
-
-namespace CoreEntityApi.Models.Entity
+namespace CoreEntityApi.Model.Common
 {
-    public partial class Employes
+    public class Employes
     {
         public int Id { get; set; }
         public string Name { get; set; }

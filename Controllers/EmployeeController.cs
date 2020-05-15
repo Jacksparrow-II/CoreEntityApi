@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using CoreEntityApi.Models.Common;
+using CoreEntityApi.Model.Common;
 using CoreEntityApi.Repository;
 
 
@@ -23,30 +23,74 @@ namespace CoreEntityApi.Controllers
             _EmpRepo = EmployesRepo;
         }
 
+        //************************************** Department *****************************************//
+
         [HttpGet("GetDepartment")]
-        public List<Models.Common.Department> GetDepartment()
+        public List<Model.Common.Department> GetDepartment()
         {
             //**** move this below code to dependency injection ***
-            //ItemRepo itemrepo = new ItemRepo();
-            //**************************************************
             return _EmpRepo.GetDepartment();
         }
 
+        [HttpPost("AddDepartment")]
+        public int AddDepartment([FromBody] Department Department)
+        {
+            //**** move this below code to dependency injection ****
+            return _EmpRepo.AddDepartment(Department);
+        }
+
+        [HttpPost("UpdateDepartment")]
+        public int UpdateDepartment([FromBody] Department Department)
+        {
+            //**** move this below code to dependency injection ****
+            return _EmpRepo.UpdateDepartment(Department);
+        }
+
+        [HttpDelete("DeleteDepartment/{DepartmentId}")]
+        public int DeleteDepartment(int DepartmentId)
+        {
+            //**** move this below code to dependency injection ****
+            return _EmpRepo.DeleteDepartment(DepartmentId);
+        }
+
+        //************************************** Designation ****************************************//
+
+
         [HttpGet("GetDesignation")]
-        public List<Models.Common.Designation> GetDesignation()
+        public List<Model.Common.Designation> GetDesignation()
         {
             //**** move this below code to dependency injection ***
-            //ItemRepo itemrepo = new ItemRepo();
-            //**************************************************
             return _EmpRepo.GetDesignation();
         }
 
+        [HttpPost("AddDesignation")]
+        public int AddDesignation([FromBody] Designation Designation)
+        {
+            //**** move this below code to dependency injection ****
+            return _EmpRepo.AddDesignation(Designation);
+        }
+
+        [HttpPost("UpdateDesignation")]
+        public int UpdateDesignation([FromBody] Designation Designation)
+        {
+            //**** move this below code to dependency injection ****
+            return _EmpRepo.UpdateDesignation(Designation);
+        }
+
+        [HttpDelete("DeleteDesignation/{DesignationId}")]
+        public int DeleteDesignation(int DesignationId)
+        {
+            //**** move this below code to dependency injection ****
+            return _EmpRepo.DeleteDesignation(DesignationId);
+        }
+
+        //************************************** Employes ****************************************//
+
+
         [HttpGet("GetItems")]
-        public List<Models.Common.Employes> GetItems()
+        public List<Model.Common.Employes> GetItems()
         {
             //**** move this below code to dependency injection ***
-            //ItemRepo itemrepo = new ItemRepo();
-            //**************************************************
             return _EmpRepo.GetItems();
         }
 
@@ -54,8 +98,6 @@ namespace CoreEntityApi.Controllers
         public int SaveItem([FromBody] Employes Employes)
         {
             //**** move this below code to dependency injection ****
-            //ItemRepo itemrepo = new ItemRepo();
-            //*************************************************
             return _EmpRepo.SaveItem(Employes);
         }
 
@@ -63,8 +105,6 @@ namespace CoreEntityApi.Controllers
         public int UpdateItem([FromBody] Employes Employes)
         {
             //**** move this below code to dependency injection ****
-            //ItemRepo itemrepo = new ItemRepo();
-            //*************************************************
             return _EmpRepo.UpdateItem(Employes);
         }
 
@@ -72,8 +112,6 @@ namespace CoreEntityApi.Controllers
         public int DeleteItem(int Id)
         {
             //**** move this below code to dependency injection ****
-            //ItemRepo itemrepo = new ItemRepo();
-            //*************************************************
             return _EmpRepo.DeleteItem(Id);
         }
 

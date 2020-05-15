@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 
-
-namespace CoreEntityApi.Models.Entity
+namespace CoreEntityApi.Model.Entity
 {
     public partial class Employes
     {
@@ -20,5 +16,8 @@ namespace CoreEntityApi.Models.Entity
         //public string DesignationName { get; set; }
         public string Dob { get; set; }
         public int Salary { get; set; }
+
+        public virtual Department DepartmentNavigation { get; set; }
+        public virtual Designation DesignationNavigation { get; set; }
     }
 }

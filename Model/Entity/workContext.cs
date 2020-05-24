@@ -42,7 +42,6 @@ namespace CoreEntityApi.Model.Entity
             modelBuilder.Entity<Designation>(entity =>
             {
                 entity.Property(e => e.DesignationName)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });
@@ -52,35 +51,31 @@ namespace CoreEntityApi.Model.Entity
                 entity.ToTable("employes");
 
                 entity.Property(e => e.Dob)
-                    .IsRequired()
                     .HasColumnName("DOB")
-                    .HasMaxLength(1)
+                    .HasMaxLength(10)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Email)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Gender)
-                    .IsRequired()
                     .HasMaxLength(10)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.DepartmentNavigation)
                     .WithMany(p => p.Employes)
                     .HasForeignKey(d => d.Department)
-                    .HasConstraintName("FK__employes__Depart__625A9A57");
+                    .HasConstraintName("FK__employes__Depart__756D6ECB");
 
                 entity.HasOne(d => d.DesignationNavigation)
                     .WithMany(p => p.Employes)
                     .HasForeignKey(d => d.Designation)
-                    .HasConstraintName("FK__employes__Design__634EBE90");
+                    .HasConstraintName("FK__employes__Design__76619304");
             });
 
             modelBuilder.Entity<Student>(entity =>

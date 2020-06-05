@@ -53,6 +53,13 @@ namespace CoreEntityApi.Controllers
             return _EmpRepo.DeleteDepartment(DepartmentId);
         }
 
+        [HttpGet("DepartmentById/{DepartmentId}")]
+        public Models.Common.Department DepartmentById(int DepartmentId)
+        {
+            //**** move this below code to dependency injection ****
+            return _EmpRepo.DepartmentById(DepartmentId);
+        }
+
         //************************************** Designation ****************************************//
 
 
@@ -84,6 +91,13 @@ namespace CoreEntityApi.Controllers
             return _EmpRepo.DeleteDesignation(DesignationId);
         }
 
+         [HttpGet("DesignationById/{DesignationId}")]
+        public Models.Common.Designation DesignationById(int DesignationId)
+        {
+            //**** move this below code to dependency injection ****
+            return _EmpRepo.DesignationById(DesignationId);
+        }
+
         //************************************** Employes ****************************************//
 
 
@@ -113,6 +127,13 @@ namespace CoreEntityApi.Controllers
         {
             //**** move this below code to dependency injection ****
             return _EmpRepo.DeleteItem(Id);
+        }
+
+        [HttpGet("EmployeeById/{Id}")]
+        public Models.Common.Employes EmployeeById(int Id)
+        {
+            //**** move this below code to dependency injection ****
+            return _EmpRepo.EmployeeById(Id);
         }
 
     }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreEntityApi.Models.Entity;
 
 namespace CoreEntityApi.Repository
 {
@@ -122,6 +123,32 @@ namespace CoreEntityApi.Repository
             return returnVal;
         }
 
+        public Models.Common.Department DepartmentById(int DepartmentId)
+        {
+            Models.Common.Department departments = new Models.Common.Department();
+            try
+            {
+                using (var dBContext = new workContext())
+                {
+                    var dep = dBContext.Department.Where(x => x.DepartmentId == DepartmentId).SingleOrDefault();
+
+                    if (dep != null)
+                    {
+                        departments.DepartmentId = dep.DepartmentId;
+                        departments.DepartmentName = dep.DepartmentName;
+
+                    }
+                    return departments;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
+        }
+
         // ------------------------------------ Designation Area --------------------------------------------------
 
         public List<Model.Common.Designation> GetDesignation()
@@ -233,6 +260,32 @@ namespace CoreEntityApi.Repository
             return returnVal;
         }
 
+        public Models.Common.Designation DesignationById(int DesignationId)
+        {
+            Models.Common.Designation Designations = new Models.Common.Designation();
+            try
+            {
+                using (var dBContext = new workContext())
+                {
+                    var Des = dBContext.Designation.Where(x => x.DesignationId == DesignationId).SingleOrDefault();
+
+                    if (Des != null)
+                    {
+                        Designations.DesignationId = Des.DesignationId;
+                        Designations.DesignationName = Des.DesignationName;
+
+                    }
+                    return Designations;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
+        }
+
         // ------------------------------------ Employes Area --------------------------------------------------
 
         public List<Model.Common.Employes> GetItems()
@@ -243,7 +296,7 @@ namespace CoreEntityApi.Repository
                 using (var dBContext = new workContext())
                 {
                     Model.Common.Employes emp;                
-                    foreach (var it in dBContext.Employes)
+                    foreach (var it in dBContext.Employes.ToList())
                     {
                         emp = new Model.Common.Employes();
                         emp.Id = it.Id;
@@ -257,6 +310,27 @@ namespace CoreEntityApi.Repository
                         //emp.DesignationName = it.DesignationName;
                         emp.Dob = it.Dob;
                         emp.Salary = it.Salary;
+
+                        if (emp.Designation != null)
+                        {
+                            var des = dBContext.Designation.FirstOrDefault(x => x.DesignationId == emp.Designation);
+                            if(des != null)
+                            {
+                                emp.DesignationName = des.DesignationName;
+                            }
+                            
+                        }
+
+                        if (emp.Department != null)
+                        {
+                            var dep = dBContext.Department.FirstOrDefault(x => x.DepartmentId == emp.Department);
+                            if (dep != null)
+                            {
+                                emp.DepartmentName = dep.DepartmentName;
+                            }
+                            
+                        }
+
                         Items.Add(emp);
                     }
 
@@ -291,6 +365,7 @@ namespace CoreEntityApi.Repository
                         emp.Designation = EmployesModel.Designation;
                         emp.Dob = EmployesModel.Dob;
                         emp.Salary = EmployesModel.Salary;
+
                         dBContext.Employes.Add(emp);
                     }
                     returnVal = dBContext.SaveChanges();
@@ -366,6 +441,39 @@ namespace CoreEntityApi.Repository
                 Console.WriteLine(ex.Message);
             }
             return returnVal;
+        }
+
+        public Models.Common.Employes EmployeeById(int Id)
+        {
+            Models.Common.Employes Employe = new Models.Common.Employes();
+            try
+            {
+                using (var dBContext = new workContext())
+                {
+                    var emp = dBContext.Employes.Where(x => x.Id == Id).SingleOrDefault();
+
+                    if (emp != null)
+                    {
+                        Employe.Id = emp.Id;
+                        Employe.Name = emp.Name;
+                        Employe.Email = emp.Email;
+                        Employe.EmployeeCode = emp.EmployeeCode;
+                        Employe.Gender = emp.Gender;
+                        Employe.Department = emp.Department;
+                        Employe.Designation = emp.Designation;
+                        Employe.Dob = emp.Dob;
+                        Employe.Salary = emp.Salary;
+
+                    }
+                    return Employe;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
         }
 
     }

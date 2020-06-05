@@ -8,14 +8,14 @@ namespace CoreEntityApi.Model.Entity
     {
         public Department()
         {
-            Employes = new HashSet<Employes>();
+            //Employes = new HashSet<Employes>();
         }
 
-        [Key]
+      
         public int DepartmentId { get; set; }
-        [Required]
+     
         public string DepartmentName { get; set; }
 
-        public virtual ICollection<Employes> Employes { get; set; }
+        //public virtual ICollection<Employes> Employes { get; set; }
     }
 }

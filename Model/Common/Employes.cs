@@ -19,18 +19,17 @@ namespace CoreEntityApi.Model.Common
         public int EmployeeCode { get; set; }
         //[Required]
         public string Gender { get; set; }
-        //[Required]
+
         public int? Department { get; set; }
-        //public string DepartmentName { get; set; }
-        [Required]
+        public string DepartmentName { get; set; }
         public int? Designation { get; set; }
-        //public string DesignationName { get; set; }
+        public string DesignationName { get; set; }
         //[Required]
         public string Dob { get; set; }
-        [Required]
+     
         public int Salary { get; set; }
 
-        public virtual Department DepartmentNavigation { get; set; }
-        public virtual Designation DesignationNavigation { get; set; }
+
+
     }
 }

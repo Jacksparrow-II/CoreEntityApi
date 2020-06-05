@@ -28,7 +28,7 @@ namespace CoreEntityApi.Model.Entity
         //[Required]
         public int Salary { get; set; }
 
-        public virtual Department DepartmentNavigation { get; set; }
-        public virtual Designation DesignationNavigation { get; set; }
+        //public virtual Department DepartmentNavigation { get; set; }
+        //public virtual Designation DesignationNavigation { get; set; }
     }
 }

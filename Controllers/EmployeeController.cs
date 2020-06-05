@@ -39,7 +39,7 @@ namespace CoreEntityApi.Controllers
             return _EmpRepo.AddDepartment(Department);
         }
 
-        [HttpPost("UpdateDepartment")]
+        [HttpPost("UpdateDepartment/{DepartmentId}")]
         public int UpdateDepartment([FromBody] Department Department)
         {
             //**** move this below code to dependency injection ****
@@ -77,7 +77,7 @@ namespace CoreEntityApi.Controllers
             return _EmpRepo.AddDesignation(Designation);
         }
 
-        [HttpPost("UpdateDesignation")]
+        [HttpPost("UpdateDesignation/{DesignationId}")]
         public int UpdateDesignation([FromBody] Designation Designation)
         {
             //**** move this below code to dependency injection ****
@@ -115,7 +115,7 @@ namespace CoreEntityApi.Controllers
             return _EmpRepo.SaveItem(Employes);
         }
 
-        [HttpPost("UpdateItem")]
+        [HttpPost("UpdateItem/{ID}")]
         public int UpdateItem([FromBody] Employes Employes)
         {
             //**** move this below code to dependency injection ****

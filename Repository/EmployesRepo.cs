@@ -40,13 +40,24 @@ namespace CoreEntityApi.Repository
             return Items;
         }
 
-        public int AddDepartment(Model.Common.Department DepartmentModel)
+        public int AddDepartment(Model.Common.Department DepartmentModel, string DepartmentName)
         {
+            List<Model.Common.Department> Items = new List<Model.Common.Department>();
+
             int returnVal = 0;
             try
             {
                 using (var dBContext = new workContext())
                 {
+                    Model.Common.Department get;
+                    foreach (var it in dBContext.Department)
+                    {
+                        get = new Model.Common.Department();
+                        get.DepartmentId = it.DepartmentId;
+                        get.DepartmentName = it.DepartmentName;
+                        Items.Add(get);
+                    }
+
                     Model.Entity.Department emp;
                     //Add record
                     if (DepartmentModel.DepartmentId == 0)
@@ -54,8 +65,19 @@ namespace CoreEntityApi.Repository
                         emp = new Model.Entity.Department();
                         emp.DepartmentName = DepartmentModel.DepartmentName;
                         dBContext.Department.Add(emp);
+                        DepartmentName = emp.DepartmentName;
                     }
-                    returnVal = dBContext.SaveChanges();
+
+                    bool departmentexist = Items.Any(asd => asd.DepartmentName == DepartmentName);
+                    if (departmentexist == true)
+                    {
+                        returnVal = -1;
+                    }
+                    else
+                    {
+                        returnVal = dBContext.SaveChanges();
+                    }
+                    
                 }
             }
             catch (Exception ex)
@@ -65,16 +87,27 @@ namespace CoreEntityApi.Repository
             return returnVal;
         }
 
-        public int UpdateDepartment(Model.Common.Department DepartmentModel)
+        public int UpdateDepartment(Model.Common.Department DepartmentModel, int DepartmentId, string DepartmentName)
         {
+            List<Model.Common.Department> Items = new List<Model.Common.Department>();
+
             int returnVal = 0;
             try
             {
                 using (var dBContext = new workContext())
                 {
+                    Model.Common.Department get;
+                    foreach (var it in dBContext.Department)
+                    {
+                        get = new Model.Common.Department();
+                        get.DepartmentId = it.DepartmentId;
+                        get.DepartmentName = it.DepartmentName;
+                        Items.Add(get);
+                    }
+
                     Model.Entity.Department emp = new Model.Entity.Department();
                     //Add record
-                    {
+                    
                         emp = dBContext.Department.FirstOrDefault(asd => asd.DepartmentId == DepartmentModel.DepartmentId);
                         if (emp != null)
                         {
@@ -82,9 +115,24 @@ namespace CoreEntityApi.Repository
                             emp.DepartmentId = DepartmentModel.DepartmentId;
                             emp.DepartmentName = DepartmentModel.DepartmentName;
                             dBContext.Department.Update(emp);
+                            DepartmentId = emp.DepartmentId;
+                            DepartmentName = emp.DepartmentName;
                         }
+
+                    bool departmentsame = Items.Any(asd => asd.DepartmentName == DepartmentName);
+                    bool departmentexist = Items.Any(asd => (asd.DepartmentId == DepartmentId) && (asd.DepartmentName == DepartmentName));
+                    if (departmentexist == true)
+                    {
+                        returnVal = dBContext.SaveChanges();
                     }
-                    returnVal = dBContext.SaveChanges();
+                    else if (departmentsame == true)
+                    {
+                        returnVal = -1;
+                    }
+                    else
+                    {
+                        returnVal = dBContext.SaveChanges();
+                    }
                 }
             }
             catch (Exception ex)
@@ -177,13 +225,24 @@ namespace CoreEntityApi.Repository
             return Items;
         }
 
-        public int AddDesignation(Model.Common.Designation DesignationModel)
+        public int AddDesignation(Model.Common.Designation DesignationModel, string DesignationName)
         {
+            List<Model.Common.Designation> Items = new List<Model.Common.Designation>();
+
             int returnVal = 0;
             try
             {
                 using (var dBContext = new workContext())
                 {
+                    Model.Common.Designation get;
+                    foreach (var it in dBContext.Designation)
+                    {
+                        get = new Model.Common.Designation();
+                        get.DesignationId = it.DesignationId;
+                        get.DesignationName = it.DesignationName;
+                        Items.Add(get);
+                    }
+
                     Model.Entity.Designation emp;
                     //Add record
                     if (DesignationModel.DesignationId == 0)
@@ -191,8 +250,18 @@ namespace CoreEntityApi.Repository
                         emp = new Model.Entity.Designation();
                         emp.DesignationName = DesignationModel.DesignationName;
                         dBContext.Designation.Add(emp);
+                        DesignationName = emp.DesignationName;
                     }
-                    returnVal = dBContext.SaveChanges();
+
+                    bool Designationexist = Items.Any(asd => asd.DesignationName == DesignationName);
+                    if (Designationexist == true)
+                    {
+                        returnVal = -1;
+                    }
+                    else
+                    {
+                        returnVal = dBContext.SaveChanges();
+                    }
                 }
             }
             catch (Exception ex)
@@ -202,16 +271,27 @@ namespace CoreEntityApi.Repository
             return returnVal;
         }
 
-        public int UpdateDesignation(Model.Common.Designation DesignationModel)
+        public int UpdateDesignation(Model.Common.Designation DesignationModel, int DesignationId, string DesignationName)
         {
+            List<Model.Common.Designation> Items = new List<Model.Common.Designation>();
+
             int returnVal = 0;
             try
             {
                 using (var dBContext = new workContext())
                 {
+                    Model.Common.Designation get;
+                    foreach (var it in dBContext.Designation)
+                    {
+                        get = new Model.Common.Designation();
+                        get.DesignationId = it.DesignationId;
+                        get.DesignationName = it.DesignationName;
+                        Items.Add(get);
+                    }
+
                     Model.Entity.Designation emp = new Model.Entity.Designation();
                     //Add record
-                    {
+                    
                         emp = dBContext.Designation.FirstOrDefault(asd => asd.DesignationId == DesignationModel.DesignationId);
                         if (emp != null)
                         {
@@ -219,9 +299,24 @@ namespace CoreEntityApi.Repository
                             emp.DesignationId = DesignationModel.DesignationId;
                             emp.DesignationName = DesignationModel.DesignationName;
                             dBContext.Designation.Update(emp);
+                            DesignationId = emp.DesignationId;
+                            DesignationName = emp.DesignationName;
                         }
+
+                    bool Designationsame = Items.Any(asd => asd.DesignationName == DesignationName);
+                    bool Designationexist = Items.Any(asd => (asd.DesignationId == DesignationId) && (asd.DesignationName == DesignationName));
+                    if (Designationexist == true)
+                    {
+                        returnVal = dBContext.SaveChanges();
                     }
-                    returnVal = dBContext.SaveChanges();
+                    else if (Designationsame == true)
+                    {
+                        returnVal = -1;
+                    }
+                    else
+                    {
+                        returnVal = dBContext.SaveChanges();
+                    }
                 }
             }
             catch (Exception ex)
@@ -345,13 +440,24 @@ namespace CoreEntityApi.Repository
         }
 
 
-        public int SaveItem(Model.Common.Employes EmployesModel)
+        public int SaveItem(Model.Common.Employes EmployesModel, string Name, DateTime Dob)
         {
+            List<Model.Common.Employes> Items = new List<Model.Common.Employes>();
+
             int returnVal = 0;
             try
             {
                 using (var dBContext = new workContext())
                 {
+                    Model.Common.Employes get;
+                    foreach (var it in dBContext.Employes)
+                    {
+                        get = new Model.Common.Employes();
+                        get.Id = it.Id;
+                        get.Name = it.Name;
+                        Items.Add(get);
+                    }
+
                     Model.Entity.Employes emp;
                     //Add record
                     if (EmployesModel.Id == 0)
@@ -365,10 +471,51 @@ namespace CoreEntityApi.Repository
                         emp.Designation = EmployesModel.Designation;
                         emp.Dob = EmployesModel.Dob;
                         emp.Salary = EmployesModel.Salary;
-
                         dBContext.Employes.Add(emp);
+                        Name = emp.Name;
+                        Dob = Convert.ToDateTime(EmployesModel.Dob);
                     }
-                    returnVal = dBContext.SaveChanges();
+
+                    //DateTime Now = DateTime.Now;
+                    //int Years = new DateTime(DateTime.Now.Subtract(Dob).Ticks).Year - 1;
+                    //DateTime PastYearDate = Dob.AddYears(Years);
+                    //int Months = 0;
+                    //for (int i = 1; i <= 12; i++)
+                    //{
+                    //    if (PastYearDate.AddMonths(i) == Now)
+                    //    {
+                    //        Months = i;
+                    //        break;
+                    //    }
+                    //    else if (PastYearDate.AddMonths(i) > Now)
+                    //    {
+                    //        Months = i - 1;
+                    //        break;
+                    //    }
+                    //}
+
+                    DateTime Now = DateTime.Now;
+                    int age = 0;
+                    age = DateTime.Now.Year - Dob.Year;
+                    if (DateTime.Now.DayOfYear < Dob.DayOfYear + 1)
+                    {
+                        age = age - 1;
+                    }
+
+
+                    bool Employeexist = Items.Any(asd => asd.Name == Name);
+                    if (Employeexist == true)
+                    {
+                        returnVal = -1;
+                    }
+                    else if (age < 21)
+                    {
+                        returnVal = -2;
+                    }
+                    else
+                    {
+                        returnVal = dBContext.SaveChanges();
+                    }
                 }
             }
             catch (Exception ex)
@@ -378,16 +525,27 @@ namespace CoreEntityApi.Repository
             return returnVal;
         }
 
-        public int UpdateItem(Model.Common.Employes EmployesModel)
+        public int UpdateItem(Model.Common.Employes EmployesModel, int Id, string Name, int EmployeeCode, DateTime Dob)
         {
+            List<Model.Common.Employes> Items = new List<Model.Common.Employes>();
+
             int returnVal = 0;
             try
             {
                 using (var dBContext = new workContext())
                 {
-                    Model.Entity.Employes emp = new Model.Entity.Employes();
-                    //Add record
+                    Model.Common.Employes get;
+                    foreach (var it in dBContext.Employes)
                     {
+                        get = new Model.Common.Employes();
+                        get.Id = it.Id;
+                        get.Name = it.Name;
+                        get.EmployeeCode = it.EmployeeCode;
+                        Items.Add(get);
+                    }
+
+                    Model.Entity.Employes emp = new Model.Entity.Employes();
+                    //Update record
                         emp = dBContext.Employes.FirstOrDefault(asd => asd.Id == EmployesModel.Id);
                         if (emp != null)
                         {
@@ -402,9 +560,41 @@ namespace CoreEntityApi.Repository
                             emp.Dob = EmployesModel.Dob;
                             emp.Salary = EmployesModel.Salary;
                             dBContext.Employes.Update(emp);
+                            Id = emp.Id;
+                            EmployeeCode = emp.EmployeeCode;
+                            Name = emp.Name;
+                            Dob = Convert.ToDateTime(EmployesModel.Dob);
                         }
+
+
+                    DateTime Now = DateTime.Now;
+                    int age = 0;
+                    age = DateTime.Now.Year - Dob.Year;
+                    if (DateTime.Now.DayOfYear < Dob.DayOfYear + 1)
+                    {
+                        age = age - 1;
                     }
-                    returnVal = dBContext.SaveChanges();
+
+                    bool Employesame = Items.Any(asd => asd.EmployeeCode == EmployeeCode);
+                    bool Employeexist = Items.Any(asd => (asd.Id == Id) && (asd.EmployeeCode == EmployeeCode));
+                    if (age < 21)
+                    {
+                        returnVal = -2;
+                    }
+                    else if (Employeexist == true && Employesame == true)
+                    {
+                        returnVal = dBContext.SaveChanges();
+                    }
+                    else if(Employesame == true)
+                    {
+                        returnVal = -1;
+                    }
+                    else
+                    {
+                        returnVal = dBContext.SaveChanges();
+                    }
+
+                    
                 }
             }
             catch (Exception ex)

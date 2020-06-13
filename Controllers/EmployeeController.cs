@@ -33,17 +33,17 @@ namespace CoreEntityApi.Controllers
         }
 
         [HttpPost("AddDepartment")]
-        public int AddDepartment([FromBody] Department Department)
+        public int AddDepartment([FromBody] Department Department, string DepartmentName)
         {
             //**** move this below code to dependency injection ****
-            return _EmpRepo.AddDepartment(Department);
+            return _EmpRepo.AddDepartment(Department, DepartmentName);
         }
 
         [HttpPost("UpdateDepartment/{DepartmentId}")]
-        public int UpdateDepartment([FromBody] Department Department)
+        public int UpdateDepartment([FromBody] Department Department, int DepartmentId, string DepartmentName)
         {
             //**** move this below code to dependency injection ****
-            return _EmpRepo.UpdateDepartment(Department);
+            return _EmpRepo.UpdateDepartment(Department,DepartmentId, DepartmentName);
         }
 
         [HttpDelete("DeleteDepartment/{DepartmentId}")]
@@ -71,17 +71,17 @@ namespace CoreEntityApi.Controllers
         }
 
         [HttpPost("AddDesignation")]
-        public int AddDesignation([FromBody] Designation Designation)
+        public int AddDesignation([FromBody] Designation Designation, string DesignationName)
         {
             //**** move this below code to dependency injection ****
-            return _EmpRepo.AddDesignation(Designation);
+            return _EmpRepo.AddDesignation(Designation, DesignationName);
         }
 
         [HttpPost("UpdateDesignation/{DesignationId}")]
-        public int UpdateDesignation([FromBody] Designation Designation)
+        public int UpdateDesignation([FromBody] Designation Designation, int DesignationId, string DesignationName)
         {
             //**** move this below code to dependency injection ****
-            return _EmpRepo.UpdateDesignation(Designation);
+            return _EmpRepo.UpdateDesignation(Designation,DesignationId, DesignationName);
         }
 
         [HttpDelete("DeleteDesignation/{DesignationId}")]
@@ -109,17 +109,17 @@ namespace CoreEntityApi.Controllers
         }
 
         [HttpPost("SaveItem")]
-        public int SaveItem([FromBody] Employes Employes)
+        public int SaveItem([FromBody] Employes Employes, string Name, DateTime Dob)
         {
             //**** move this below code to dependency injection ****
-            return _EmpRepo.SaveItem(Employes);
+            return _EmpRepo.SaveItem(Employes, Name, Dob);
         }
 
         [HttpPost("UpdateItem/{ID}")]
-        public int UpdateItem([FromBody] Employes Employes)
+        public int UpdateItem([FromBody] Employes Employes, int Id, string Name, int EmployeeCode, DateTime Dob)
         {
             //**** move this below code to dependency injection ****
-            return _EmpRepo.UpdateItem(Employes);
+            return _EmpRepo.UpdateItem(Employes, Id, Name, EmployeeCode, Dob);
         }
 
         [HttpDelete("DeleteItem/{Id}")]

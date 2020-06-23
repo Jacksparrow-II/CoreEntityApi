@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace CoreEntityApi.Model.Entity
 {
-    public partial class workContext : DbContext
+    public partial class workentityContext : DbContext
     {
-        public workContext()
+        public workentityContext()
         {
         }
 
-        public workContext(DbContextOptions<workContext> options)
+        public workentityContext(DbContextOptions<workentityContext> options)
             : base(options)
         {
         }
@@ -18,14 +18,14 @@ namespace CoreEntityApi.Model.Entity
         public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<Designation> Designation { get; set; }
         public virtual DbSet<Employes> Employes { get; set; }
-        public virtual DbSet<Student> Student { get; set; }
+        public virtual DbSet<Registration> Registration { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=work;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=workentity;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             }
         }
 
@@ -42,6 +42,7 @@ namespace CoreEntityApi.Model.Entity
             modelBuilder.Entity<Designation>(entity =>
             {
                 entity.Property(e => e.DesignationName)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });
@@ -52,60 +53,45 @@ namespace CoreEntityApi.Model.Entity
 
                 entity.Property(e => e.Dob)
                     .HasColumnName("DOB")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
+                    .HasColumnType("date");
 
                 entity.Property(e => e.Email)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Gender)
+                    .IsRequired()
                     .HasMaxLength(10)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                //entity.HasOne(d => d.DepartmentNavigation)
-                //    .WithMany(p => p.Employes)
-                //    .HasForeignKey(d => d.Department)
-                //    .HasConstraintName("FK__employes__Depart__756D6ECB");
+                entity.HasOne(d => d.DepartmentNavigation)
+                    .WithMany(p => p.Employes)
+                    .HasForeignKey(d => d.Department)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__employes__Depart__300424B4");
 
-                //entity.HasOne(d => d.DesignationNavigation)
-                //    .WithMany(p => p.Employes)
-                //    .HasForeignKey(d => d.Designation)
-                //    .HasConstraintName("FK__employes__Design__76619304");
+                entity.HasOne(d => d.DesignationNavigation)
+                    .WithMany(p => p.Employes)
+                    .HasForeignKey(d => d.Designation)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__employes__Design__30F848ED");
             });
 
-            modelBuilder.Entity<Student>(entity =>
+            modelBuilder.Entity<Registration>(entity =>
             {
-                entity.HasKey(e => e.Sid)
-                    .HasName("PK__student__DDDFDD36C28151A1");
-
-                entity.ToTable("student");
-
-                entity.Property(e => e.Sid).HasColumnName("sid");
-
-                entity.Property(e => e.Address)
-                    .HasColumnName("address")
+                entity.Property(e => e.Password)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Cource)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Dob)
-                    .HasColumnName("dob")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.Marks)
-                    .HasColumnName("marks")
-                    .HasColumnType("numeric(3, 0)");
-
-                entity.Property(e => e.Sname)
-                    .HasColumnName("sname")
+                entity.Property(e => e.UserName)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });

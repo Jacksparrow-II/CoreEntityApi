@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace CoreEntityApi.Model.Entity
+namespace CoreEntityApi.Model1.Entity
 {
     public partial class Student
     {

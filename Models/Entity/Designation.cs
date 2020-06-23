@@ -7,5 +7,7 @@ namespace CoreEntityApi.Models.Entity
     {
         public int DesignationId { get; set; }
         public string DesignationName { get; set; }
+
+        //public virtual ICollection<Employes> Employes { get; set; }
     }
 }

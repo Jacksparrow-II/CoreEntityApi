@@ -6,12 +6,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using CoreEntityApi.Model.Common;
+using CoreEntityApi.Models.Common;
 using CoreEntityApi.Repository;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoreEntityApi.Controllers
 {
+    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
+
     [Route("api/[controller]")]
     [EnableCors("AllowMyOrigin")]
     [ApiController]
@@ -23,10 +25,12 @@ namespace CoreEntityApi.Controllers
             _EmpRepo = EmployesRepo;
         }
 
-        //************************************** Department *****************************************//
+
+
+        #region Department
 
         [HttpGet("GetDepartment")]
-        public List<Model.Common.Department> GetDepartment()
+        public List<Models.Common.Department> GetDepartment()
         {
             //**** move this below code to dependency injection ***
             return _EmpRepo.GetDepartment();
@@ -60,11 +64,15 @@ namespace CoreEntityApi.Controllers
             return _EmpRepo.DepartmentById(DepartmentId);
         }
 
-        //************************************** Designation ****************************************//
+#endregion
+
+
+
+        #region Designation
 
 
         [HttpGet("GetDesignation")]
-        public List<Model.Common.Designation> GetDesignation()
+        public List<Models.Common.Designation> GetDesignation()
         {
             //**** move this below code to dependency injection ***
             return _EmpRepo.GetDesignation();
@@ -98,21 +106,24 @@ namespace CoreEntityApi.Controllers
             return _EmpRepo.DesignationById(DesignationId);
         }
 
-        //************************************** Employes ****************************************//
+        #endregion
 
+
+
+        #region Employes
 
         [HttpGet("GetItems")]
-        public List<Model.Common.Employes> GetItems()
+        public List<Models.Common.Employes> GetItems()
         {
             //**** move this below code to dependency injection ***
             return _EmpRepo.GetItems();
         }
 
         [HttpPost("SaveItem")]
-        public int SaveItem([FromBody] Employes Employes, string Name, DateTime Dob)
+        public int SaveItem([FromBody] Employes Employes, int EmployeeCode, DateTime Dob)
         {
             //**** move this below code to dependency injection ****
-            return _EmpRepo.SaveItem(Employes, Name, Dob);
+            return _EmpRepo.SaveItem(Employes, EmployeeCode, Dob);
         }
 
         [HttpPost("UpdateItem/{ID}")]
@@ -135,6 +146,8 @@ namespace CoreEntityApi.Controllers
             //**** move this below code to dependency injection ****
             return _EmpRepo.EmployeeById(Id);
         }
+
+        #endregion
 
     }
 }

@@ -10,6 +10,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using CoreEntityApi.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
+using System.Text;
+using CoreEntityApi.Repository.Interface;
+using CoreEntityApi.Model.Common;
 
 namespace CoreEntityApi
 {
@@ -33,8 +39,62 @@ namespace CoreEntityApi
                 .AllowAnyHeader());
             });
 
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            //services.AddTransient<IUserService, UserService>();
+            //services.Configure<AuthOptions>(Configuration.GetSection("AuthOptions"));
+
+            //var authOptions = Configuration.GetSection("AuthOptions").Get<AuthOptions>();
+
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(options =>
+            //{
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuer = true,
+            //        ValidateAudience = true,
+            //        ValidateLifetime = true,
+            //        RequireExpirationTime = true,
+            //        ValidIssuer = authOptions.Issuer,
+            //        ValidAudience = authOptions.Audience,
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authOptions.SecureKey))
+            //    };
+            //});
+
             services.AddControllers();
+            var appSettingsSection = Configuration.GetSection("AppSetting");
+            services.Configure<AppSetting>(appSettingsSection);
+
+            //JWT Authentication
+            var appSetting = appSettingsSection.Get<AppSetting>();
+            var key = Encoding.ASCII.GetBytes(appSetting.Key);
+
+            services.AddAuthentication(au =>
+            {
+                au.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                au.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(jwt =>
+            {
+                jwt.RequireHttpsMetadata = false;
+                jwt.SaveToken = true;
+                jwt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+            services.AddControllers(    );
             services.AddScoped<EmpRepo, EmployesRepo>();
+            services.AddScoped<ILogin, LoginRepo>();
+            services.AddScoped<IAuthenticateService, AuthenticateService>();
         }
 
 

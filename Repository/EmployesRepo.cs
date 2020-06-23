@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using CoreEntityApi.Model.Entity;
+using CoreEntityApi.Models.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CoreEntityApi.Models.Entity;
 
 namespace CoreEntityApi.Repository
 {
@@ -13,18 +12,20 @@ namespace CoreEntityApi.Repository
     public class EmployesRepo : EmpRepo
     {
 
-// ------------------------------------Department Area--------------------------------------------------
-        public List<Model.Common.Department> GetDepartment()
+
+        #region Department region
+
+        public List<Models.Common.Department> GetDepartment()
         {
-            List<Model.Common.Department> Items = new List<Model.Common.Department>();
+            List<Models.Common.Department> Items = new List<Models.Common.Department>();
             try
             {
-                using (var dBContext = new workContext())
+                using (var dBContext = new workentityContext())
                 {
-                    Model.Common.Department emp;
+                    Models.Common.Department emp;
                     foreach (var it in dBContext.Department)
                     {
-                        emp = new Model.Common.Department();
+                        emp = new Models.Common.Department();
                         emp.DepartmentId = it.DepartmentId;
                         emp.DepartmentName = it.DepartmentName;
                         Items.Add(emp);
@@ -40,29 +41,29 @@ namespace CoreEntityApi.Repository
             return Items;
         }
 
-        public int AddDepartment(Model.Common.Department DepartmentModel, string DepartmentName)
+        public int AddDepartment(Models.Common.Department DepartmentModel, string DepartmentName)
         {
-            List<Model.Common.Department> Items = new List<Model.Common.Department>();
+            List<Models.Common.Department> Items = new List<Models.Common.Department>();
 
             int returnVal = 0;
             try
             {
-                using (var dBContext = new workContext())
+                using (var dBContext = new workentityContext())
                 {
-                    Model.Common.Department get;
+                    Models.Common.Department get;
                     foreach (var it in dBContext.Department)
                     {
-                        get = new Model.Common.Department();
+                        get = new Models.Common.Department();
                         get.DepartmentId = it.DepartmentId;
                         get.DepartmentName = it.DepartmentName;
                         Items.Add(get);
                     }
 
-                    Model.Entity.Department emp;
+                    Models.Entity.Department emp;
                     //Add record
                     if (DepartmentModel.DepartmentId == 0)
                     {
-                        emp = new Model.Entity.Department();
+                        emp = new Models.Entity.Department();
                         emp.DepartmentName = DepartmentModel.DepartmentName;
                         dBContext.Department.Add(emp);
                         DepartmentName = emp.DepartmentName;
@@ -87,25 +88,25 @@ namespace CoreEntityApi.Repository
             return returnVal;
         }
 
-        public int UpdateDepartment(Model.Common.Department DepartmentModel, int DepartmentId, string DepartmentName)
+        public int UpdateDepartment(Models.Common.Department DepartmentModel, int DepartmentId, string DepartmentName)
         {
-            List<Model.Common.Department> Items = new List<Model.Common.Department>();
+            List<Models.Common.Department> Items = new List<Models.Common.Department>();
 
             int returnVal = 0;
             try
             {
-                using (var dBContext = new workContext())
+                using (var dBContext = new workentityContext())
                 {
-                    Model.Common.Department get;
+                    Models.Common.Department get;
                     foreach (var it in dBContext.Department)
                     {
-                        get = new Model.Common.Department();
+                        get = new Models.Common.Department();
                         get.DepartmentId = it.DepartmentId;
                         get.DepartmentName = it.DepartmentName;
                         Items.Add(get);
                     }
 
-                    Model.Entity.Department emp = new Model.Entity.Department();
+                    Models.Entity.Department emp = new Models.Entity.Department();
                     //Add record
                     
                         emp = dBContext.Department.FirstOrDefault(asd => asd.DepartmentId == DepartmentModel.DepartmentId);
@@ -147,10 +148,10 @@ namespace CoreEntityApi.Repository
             int returnVal = 0;
             try
             {
-                using (var dBContext = new workContext())
+                using (var dBContext = new workentityContext())
                 {
-                    Model.Entity.Department emp = new Model.Entity.Department();
-                    Model.Common.Department DeleteItem = new Model.Common.Department();
+                    Models.Entity.Department emp = new Models.Entity.Department();
+                    Models.Common.Department DeleteItem = new Models.Common.Department();
                     //Add record
                     {
                         emp = dBContext.Department.FirstOrDefault(asd => asd.DepartmentId == DepartmentId);
@@ -176,7 +177,7 @@ namespace CoreEntityApi.Repository
             Models.Common.Department departments = new Models.Common.Department();
             try
             {
-                using (var dBContext = new workContext())
+                using (var dBContext = new workentityContext())
                 {
                     var dep = dBContext.Department.Where(x => x.DepartmentId == DepartmentId).SingleOrDefault();
 
@@ -197,19 +198,23 @@ namespace CoreEntityApi.Repository
 
         }
 
-        // ------------------------------------ Designation Area --------------------------------------------------
+#endregion
 
-        public List<Model.Common.Designation> GetDesignation()
+
+
+        #region Designation region 
+
+        public List<Models.Common.Designation> GetDesignation()
         {
-            List<Model.Common.Designation> Items = new List<Model.Common.Designation>();
+            List<Models.Common.Designation> Items = new List<Models.Common.Designation>();
             try
             {
-                using (var dBContext = new workContext())
+                using (var dBContext = new workentityContext())
                 {
-                    Model.Common.Designation emp;
+                    Models.Common.Designation emp;
                     foreach (var it in dBContext.Designation)
                     {
-                        emp = new Model.Common.Designation();
+                        emp = new Models.Common.Designation();
                         emp.DesignationId = it.DesignationId;
                         emp.DesignationName = it.DesignationName;
                         Items.Add(emp);
@@ -225,29 +230,29 @@ namespace CoreEntityApi.Repository
             return Items;
         }
 
-        public int AddDesignation(Model.Common.Designation DesignationModel, string DesignationName)
+        public int AddDesignation(Models.Common.Designation DesignationModel, string DesignationName)
         {
-            List<Model.Common.Designation> Items = new List<Model.Common.Designation>();
+            List<Models.Common.Designation> Items = new List<Models.Common.Designation>();
 
             int returnVal = 0;
             try
             {
-                using (var dBContext = new workContext())
+                using (var dBContext = new workentityContext())
                 {
-                    Model.Common.Designation get;
+                    Models.Common.Designation get;
                     foreach (var it in dBContext.Designation)
                     {
-                        get = new Model.Common.Designation();
+                        get = new Models.Common.Designation();
                         get.DesignationId = it.DesignationId;
                         get.DesignationName = it.DesignationName;
                         Items.Add(get);
                     }
 
-                    Model.Entity.Designation emp;
+                    Models.Entity.Designation emp;
                     //Add record
                     if (DesignationModel.DesignationId == 0)
                     {
-                        emp = new Model.Entity.Designation();
+                        emp = new Models.Entity.Designation();
                         emp.DesignationName = DesignationModel.DesignationName;
                         dBContext.Designation.Add(emp);
                         DesignationName = emp.DesignationName;
@@ -271,25 +276,25 @@ namespace CoreEntityApi.Repository
             return returnVal;
         }
 
-        public int UpdateDesignation(Model.Common.Designation DesignationModel, int DesignationId, string DesignationName)
+        public int UpdateDesignation(Models.Common.Designation DesignationModel, int DesignationId, string DesignationName)
         {
-            List<Model.Common.Designation> Items = new List<Model.Common.Designation>();
-
+            List<Models.Common.Designation> Items = new List<Models.Common.Designation>();
+            
             int returnVal = 0;
             try
             {
-                using (var dBContext = new workContext())
+                using (var dBContext = new workentityContext())
                 {
-                    Model.Common.Designation get;
+                    Models.Common.Designation get;
                     foreach (var it in dBContext.Designation)
                     {
-                        get = new Model.Common.Designation();
+                        get = new Models.Common.Designation();
                         get.DesignationId = it.DesignationId;
                         get.DesignationName = it.DesignationName;
                         Items.Add(get);
                     }
 
-                    Model.Entity.Designation emp = new Model.Entity.Designation();
+                    Models.Entity.Designation emp = new Models.Entity.Designation();
                     //Add record
                     
                         emp = dBContext.Designation.FirstOrDefault(asd => asd.DesignationId == DesignationModel.DesignationId);
@@ -331,10 +336,10 @@ namespace CoreEntityApi.Repository
             int returnVal = 0;
             try
             {
-                using (var dBContext = new workContext())
+                using (var dBContext = new workentityContext())
                 {
-                    Model.Entity.Designation emp = new Model.Entity.Designation();
-                    Model.Common.Designation DeleteItem = new Model.Common.Designation();
+                    Models.Entity.Designation emp = new Models.Entity.Designation();
+                    Models.Common.Designation DeleteItem = new Models.Common.Designation();
                     //Add record
                     {
                         emp = dBContext.Designation.FirstOrDefault(asd => asd.DesignationId == DesignationId);
@@ -360,7 +365,7 @@ namespace CoreEntityApi.Repository
             Models.Common.Designation Designations = new Models.Common.Designation();
             try
             {
-                using (var dBContext = new workContext())
+                using (var dBContext = new workentityContext())
                 {
                     var Des = dBContext.Designation.Where(x => x.DesignationId == DesignationId).SingleOrDefault();
 
@@ -381,19 +386,23 @@ namespace CoreEntityApi.Repository
 
         }
 
-        // ------------------------------------ Employes Area --------------------------------------------------
+#endregion
 
-        public List<Model.Common.Employes> GetItems()
+
+
+        #region Employes region
+
+        public List<Models.Common.Employes> GetItems()
         {
-            List<Model.Common.Employes> Items = new List<Model.Common.Employes>();
+            List<Models.Common.Employes> Items = new List<Models.Common.Employes>();
             try
             {
-                using (var dBContext = new workContext())
+                using (var dBContext = new workentityContext())
                 {
-                    Model.Common.Employes emp;                
+                    Models.Common.Employes emp;                
                     foreach (var it in dBContext.Employes.ToList())
                     {
-                        emp = new Model.Common.Employes();
+                        emp = new Models.Common.Employes();
                         emp.Id = it.Id;
                         emp.Name = it.Name;
                         emp.Email = it.Email;
@@ -403,6 +412,7 @@ namespace CoreEntityApi.Repository
                         //emp.DepartmentName = it.DepartmentName;
                         emp.Designation = it.Designation;
                         //emp.DesignationName = it.DesignationName;
+                        //emp.Dob = it.Dob.ToString("dd-MMM-yyyy");
                         emp.Dob = it.Dob;
                         emp.Salary = it.Salary;
 
@@ -440,39 +450,41 @@ namespace CoreEntityApi.Repository
         }
 
 
-        public int SaveItem(Model.Common.Employes EmployesModel, string Name, DateTime Dob)
+        public int SaveItem(Models.Common.Employes EmployesModel, int EmployeeCode, DateTime Dob)
         {
-            List<Model.Common.Employes> Items = new List<Model.Common.Employes>();
+            List<Models.Common.Employes> Items = new List<Models.Common.Employes>();
 
             int returnVal = 0;
             try
             {
-                using (var dBContext = new workContext())
+                using (var dBContext = new workentityContext())
                 {
-                    Model.Common.Employes get;
+                    Models.Common.Employes get;
                     foreach (var it in dBContext.Employes)
                     {
-                        get = new Model.Common.Employes();
+                        get = new Models.Common.Employes();
                         get.Id = it.Id;
                         get.Name = it.Name;
+                        get.EmployeeCode = it.EmployeeCode;
                         Items.Add(get);
                     }
 
-                    Model.Entity.Employes emp;
+                    Models.Entity.Employes emp;
                     //Add record
                     if (EmployesModel.Id == 0)
                     {
-                        emp = new Model.Entity.Employes();
+                        emp = new Models.Entity.Employes();
                         emp.Name = EmployesModel.Name;
                         emp.Email = EmployesModel.Email;
                         emp.EmployeeCode = EmployesModel.EmployeeCode;
                         emp.Gender = EmployesModel.Gender;
                         emp.Department = EmployesModel.Department;
                         emp.Designation = EmployesModel.Designation;
+                        //emp.Dob = Convert.ToDateTime(EmployesModel.Dob);
                         emp.Dob = EmployesModel.Dob;
                         emp.Salary = EmployesModel.Salary;
                         dBContext.Employes.Add(emp);
-                        Name = emp.Name;
+                        EmployeeCode = emp.EmployeeCode;
                         Dob = Convert.ToDateTime(EmployesModel.Dob);
                     }
 
@@ -503,7 +515,7 @@ namespace CoreEntityApi.Repository
                     }
 
 
-                    bool Employeexist = Items.Any(asd => asd.Name == Name);
+                    bool Employeexist = Items.Any(asd => asd.EmployeeCode == EmployeeCode);
                     if (Employeexist == true)
                     {
                         returnVal = -1;
@@ -525,26 +537,26 @@ namespace CoreEntityApi.Repository
             return returnVal;
         }
 
-        public int UpdateItem(Model.Common.Employes EmployesModel, int Id, string Name, int EmployeeCode, DateTime Dob)
+        public int UpdateItem(Models.Common.Employes EmployesModel, int Id, string Name, int EmployeeCode, DateTime Dob)
         {
-            List<Model.Common.Employes> Items = new List<Model.Common.Employes>();
+            List<Models.Common.Employes> Items = new List<Models.Common.Employes>();
 
             int returnVal = 0;
             try
             {
-                using (var dBContext = new workContext())
+                using (var dBContext = new workentityContext())
                 {
-                    Model.Common.Employes get;
+                    Models.Common.Employes get;
                     foreach (var it in dBContext.Employes)
                     {
-                        get = new Model.Common.Employes();
+                        get = new Models.Common.Employes();
                         get.Id = it.Id;
                         get.Name = it.Name;
                         get.EmployeeCode = it.EmployeeCode;
                         Items.Add(get);
                     }
 
-                    Model.Entity.Employes emp = new Model.Entity.Employes();
+                    Models.Entity.Employes emp = new Models.Entity.Employes();
                     //Update record
                         emp = dBContext.Employes.FirstOrDefault(asd => asd.Id == EmployesModel.Id);
                         if (emp != null)
@@ -557,6 +569,7 @@ namespace CoreEntityApi.Repository
                             emp.Gender = EmployesModel.Gender;
                             emp.Department = EmployesModel.Department;
                             emp.Designation = EmployesModel.Designation;
+                        //emp.Dob = Convert.ToDateTime(EmployesModel.Dob);
                             emp.Dob = EmployesModel.Dob;
                             emp.Salary = EmployesModel.Salary;
                             dBContext.Employes.Update(emp);
@@ -581,7 +594,7 @@ namespace CoreEntityApi.Repository
                     {
                         returnVal = -2;
                     }
-                    else if (Employeexist == true && Employesame == true)
+                    else if ( Employeexist == true && Employesame == true)
                     {
                         returnVal = dBContext.SaveChanges();
                     }
@@ -594,7 +607,30 @@ namespace CoreEntityApi.Repository
                         returnVal = dBContext.SaveChanges();
                     }
 
-                    
+                    //bool EmployeName = Items.Any(asd => asd.Name == Name); 
+                    //bool EmployeNameexist = Items.Any(asd => (asd.Id == Id) && (asd.Name == Name));
+                    //bool Employesame = Items.Any(asd => asd.EmployeeCode == EmployeeCode);
+                    //bool Employeexist = Items.Any(asd => (asd.Id == Id) && (asd.EmployeeCode == EmployeeCode));
+                    //if (age < 21)
+                    //{
+                    //    returnVal = -2;
+                    //}
+                    //else if (Employeexist == true && Employesame == true || EmployeNameexist == true && EmployeName == true)
+                    //{
+                    //    returnVal = dBContext.SaveChanges();
+                    //}
+                    //else if (EmployeName == true)
+                    //{
+                    //    returnVal = -3;
+                    //}
+                    //else if (Employesame == true)
+                    //{
+                    //    returnVal = -1;
+                    //}
+                    //else
+                    //{
+                    //    returnVal = dBContext.SaveChanges();
+                    //}
                 }
             }
             catch (Exception ex)
@@ -609,10 +645,10 @@ namespace CoreEntityApi.Repository
             int returnVal = 0;
             try
             {
-                using (var dBContext = new workContext())
+                using (var dBContext = new workentityContext())
                 {
-                    Model.Entity.Employes emp = new Model.Entity.Employes();
-                    Model.Common.Employes DeleteItem = new Model.Common.Employes();
+                    Models.Entity.Employes emp = new Models.Entity.Employes();
+                    Models.Common.Employes DeleteItem = new Models.Common.Employes();
                     //Add record
                     {
                         emp = dBContext.Employes.FirstOrDefault(asd => asd.Id == Id);
@@ -638,7 +674,7 @@ namespace CoreEntityApi.Repository
             Models.Common.Employes Employe = new Models.Common.Employes();
             try
             {
-                using (var dBContext = new workContext())
+                using (var dBContext = new workentityContext())
                 {
                     var emp = dBContext.Employes.Where(x => x.Id == Id).SingleOrDefault();
 
@@ -652,6 +688,7 @@ namespace CoreEntityApi.Repository
                         Employe.Department = emp.Department;
                         Employe.Designation = emp.Designation;
                         Employe.Dob = emp.Dob;
+                        //Employe.Dob = emp.Dob.ToString();
                         Employe.Salary = emp.Salary;
 
                     }
@@ -665,6 +702,8 @@ namespace CoreEntityApi.Repository
             }
 
         }
+
+        #endregion
 
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace CoreEntityApi.Model.Common
+namespace CoreEntityApi.Model1.Common
 {
     public class Designation
     {

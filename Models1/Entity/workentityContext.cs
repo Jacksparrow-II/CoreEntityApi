@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace CoreEntityApi.Models.Entity
+namespace CoreEntityApi.Models1.Entity
 {
     public partial class workentityContext : DbContext
     {
@@ -17,16 +17,15 @@ namespace CoreEntityApi.Models.Entity
 
         public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<Designation> Designation { get; set; }
-        public virtual DbSet<Employes> Employes { get; set; }   
+        public virtual DbSet<Employes> Employes { get; set; }
         public virtual DbSet<Registration> Registration { get; set; }
         public virtual DbSet<Userdetails> Userdetails { get; set; }
 
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=workentity;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             }
         }
@@ -72,17 +71,17 @@ namespace CoreEntityApi.Models.Entity
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                //entity.HasOne(d => d.DepartmentNavigation)
-                //    .WithMany(p => p.Employes)
-                //    .HasForeignKey(d => d.Department)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //    .HasConstraintName("FK__employes__Depart__300424B4");
+                entity.HasOne(d => d.DepartmentNavigation)
+                    .WithMany(p => p.Employes)
+                    .HasForeignKey(d => d.Department)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__employes__Depart__300424B4");
 
-                //entity.HasOne(d => d.DesignationNavigation)
-                //    .WithMany(p => p.Employes)
-                //    .HasForeignKey(d => d.Designation)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //    .HasConstraintName("FK__employes__Design__30F848ED");
+                entity.HasOne(d => d.DesignationNavigation)
+                    .WithMany(p => p.Employes)
+                    .HasForeignKey(d => d.Designation)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__employes__Design__30F848ED");
             });
 
             modelBuilder.Entity<Registration>(entity =>

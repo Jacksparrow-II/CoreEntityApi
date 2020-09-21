@@ -16,6 +16,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 using CoreEntityApi.Repository.Interface;
 using CoreEntityApi.Model.Common;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace CoreEntityApi
 {
@@ -39,35 +43,15 @@ namespace CoreEntityApi
                 .AllowAnyHeader());
             });
 
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            //services.AddTransient<IUserService, UserService>();
-            //services.Configure<AuthOptions>(Configuration.GetSection("AuthOptions"));
-
-            //var authOptions = Configuration.GetSection("AuthOptions").Get<AuthOptions>();
-
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //}).AddJwtBearer(options =>
-            //{
-            //    options.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateIssuer = true,
-            //        ValidateAudience = true,
-            //        ValidateLifetime = true,
-            //        RequireExpirationTime = true,
-            //        ValidIssuer = authOptions.Issuer,
-            //        ValidAudience = authOptions.Audience,
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authOptions.SecureKey))
-            //    };
-            //});
-
             services.AddControllers();
             var appSettingsSection = Configuration.GetSection("AppSetting");
             services.Configure<AppSetting>(appSettingsSection);
+
+            services.Configure<FormOptions>(o => {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            });
 
             //JWT Authentication
             var appSetting = appSettingsSection.Get<AppSetting>();
@@ -112,6 +96,13 @@ namespace CoreEntityApi
             app.UseCors();
 
             app.UseAuthorization();
+
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+                RequestPath = new PathString("/Resources")
+            });
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,0 +1,18 @@
+idcodeemail
+idcode
+idemail
+email
+code
+
+if
+age < 21
+else if idcodeemail == true Employeexist == true && Employesame == true || EmployeNameexist == true && EmployeName == true
+save changes 
+else if idcode == true && email == false
+-1
+elseif idemail == true && code == false
+-2
+elseif email == false && code == false
+-3
+else
+save changes

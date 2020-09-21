@@ -19,7 +19,6 @@ namespace CoreEntityApi.Models.Common
         public int EmployeeCode { get; set; }
         //[Required]
         public string Gender { get; set; }
-
         public int? Department { get; set; }
         public string DepartmentName { get; set; }
         public int? Designation { get; set; }

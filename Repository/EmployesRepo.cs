@@ -1,17 +1,14 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using CoreEntityApi.Models.Entity;
+﻿using CoreEntityApi.Models.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CoreEntityApi.Repository
 {
 
     public class EmployesRepo : EmpRepo
     {
-
+        
 
         #region Department region
 
@@ -702,6 +699,14 @@ namespace CoreEntityApi.Repository
             }
 
         }
+
+        #endregion
+
+
+
+        #region UserDetail
+
+
 
         #endregion
 
